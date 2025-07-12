@@ -4,9 +4,11 @@ import axios from 'axios';
 export const getQuestions = async () => {
   try {
     const res = await axios.get('/api/questions');
-    return res.data;
+    // Ensure we return an array
+    return Array.isArray(res.data) ? res.data : [];
   } catch (error) {
-    throw error;
+    console.error('Error fetching questions:', error);
+    return [];  // Return empty array on error
   }
 };
 
