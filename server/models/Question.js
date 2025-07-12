@@ -9,6 +9,7 @@ const questionSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true
+    // This field stores rich HTML content from the editor
   },
   tags: [{
     type: String,

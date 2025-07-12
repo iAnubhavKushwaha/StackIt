@@ -1,8 +1,11 @@
+//server\server.js
+
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import fileUpload from 'express-fileupload';
 import connectDB from './config/db.js';
 import errorHandler from './middleware/error.js';
 
@@ -25,6 +28,7 @@ import questionRoutes from './routes/questions.js';
 import answerRoutes from './routes/answers.js';
 import notificationRoutes from './routes/notifications.js';
 import tagRoutes from './routes/tags.js'; 
+import uploadRoutes from './routes/uploads.js';
 
 const app = express();
 
@@ -35,12 +39,23 @@ connectDB();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
+// File Upload middleware
+app.use(fileUpload({
+  createParentPath: true,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  abortOnLimit: true
+}));
+
 // Define Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/answers', answerRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/tags', tagRoutes);
+app.use('/api/uploads', uploadRoutes);
+
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

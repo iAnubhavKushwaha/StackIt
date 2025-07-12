@@ -4,6 +4,7 @@ const answerSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
+    // This field stores rich HTML content from the editor
   },
   question: {
     type: mongoose.Schema.Types.ObjectId,
