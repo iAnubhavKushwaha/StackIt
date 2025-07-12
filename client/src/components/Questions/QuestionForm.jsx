@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createQuestion } from '../../utils/api';
+import RichTextEditor from '../Common/RichTextEditor';
 
 function QuestionForm() {
   const [title, setTitle] = useState('');
@@ -14,7 +15,7 @@ function QuestionForm() {
     e.preventDefault();
     setError('');
     
-    if (!title.trim() || !description.trim()) {
+    if (!title.trim() || !description || description === '<p><br></p>') {
       return setError('Title and description are required');
     }
 
@@ -69,14 +70,11 @@ function QuestionForm() {
       
       <div className="mb-4">
         <label htmlFor="description" className="block mb-1 font-medium">Description</label>
-        <textarea
-          id="description"
-          className="input min-h-[200px]"
+        <RichTextEditor
           value={description}
-          onChange={e => setDescription(e.target.value)}
+          onChange={setDescription}
           placeholder="Provide details about your question"
-          required
-        ></textarea>
+        />
       </div>
       
       <div className="mb-6">

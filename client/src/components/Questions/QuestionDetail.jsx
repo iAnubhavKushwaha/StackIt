@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getQuestionById } from '../../utils/api';
 import AnswerList from '../Answers/AnswerList';
+import SanitizedHTML from '../Common/SanitizedHTML';
 
 function QuestionDetail() {
   const { id } = useParams();
@@ -66,8 +67,8 @@ function QuestionDetail() {
           Asked by {question.user?.username} on {new Date(question.createdAt).toLocaleDateString()} • {question.views} views
         </div>
         
-        <div className="prose max-w-none">
-          {question.description}
+        <div className="question-content">
+          <SanitizedHTML content={question.description} />
         </div>
       </div>
       

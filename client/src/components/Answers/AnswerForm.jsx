@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { createAnswer } from '../../utils/api';
 import { Link } from 'react-router-dom';
+import RichTextEditor from '../Common/RichTextEditor';
 
 function AnswerForm({ questionId, onAnswerAdded }) {
   const [content, setContent] = useState('');
@@ -13,7 +14,7 @@ function AnswerForm({ questionId, onAnswerAdded }) {
     e.preventDefault();
     setError('');
     
-    if (!content.trim()) {
+    if (!content || content === '<p><br></p>') {
       return setError('Answer cannot be empty');
     }
     
@@ -57,13 +58,11 @@ function AnswerForm({ questionId, onAnswerAdded }) {
       
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <textarea
-            className="input min-h-[150px]"
+          <RichTextEditor
             value={content}
-            onChange={e => setContent(e.target.value)}
+            onChange={setContent}
             placeholder="Write your answer here..."
-            required
-          ></textarea>
+          />
         </div>
         
         <button 

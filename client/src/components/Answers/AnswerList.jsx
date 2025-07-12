@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAnswers } from '../../utils/api';
 import AnswerForm from './AnswerForm';
+import SanitizedHTML from '../Common/SanitizedHTML';
 
 function AnswerList({ questionId }) {
   const [answers, setAnswers] = useState([]);
@@ -46,8 +47,8 @@ function AnswerList({ questionId }) {
               key={answer._id} 
               className={`card ${answer.isAccepted ? 'border border-green-500' : ''}`}
             >
-              <div className="prose max-w-none">
-                {answer.content}
+              <div className="answer-content">
+                <SanitizedHTML content={answer.content} />
               </div>
               
               <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
