@@ -30,25 +30,23 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow py-6">
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/questions/:id" element={<QuestionPage />} />
-            <Route path="/ask" element={
-              <ProtectedRoute>
-                <AskQuestionPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/profile" element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </div>
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<div className="container py-6"><HomePage /></div>} />
+          <Route path="/questions/:id" element={<div className="container py-6"><QuestionPage /></div>} />
+          <Route path="/ask" element={
+            <ProtectedRoute>
+              <div className="container py-6"><AskQuestionPage /></div>
+            </ProtectedRoute>
+          } />
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <div className="container py-6"><ProfilePage /></div>
+            </ProtectedRoute>
+          } />
+        </Routes>
       </main>
       <Footer />
     </div>
