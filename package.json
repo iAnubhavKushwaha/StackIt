@@ -1,0 +1,24 @@
+{
+  "name": "stackit",
+  "version": "1.0.0",
+  "description": "A Q&A forum platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd client && npm install",
+    "build": "cd client && npm run build",
+    "render-postbuild": "npm install && cd client && npm install && npm run build"
+  },
+  "keywords": ["q&a", "forum", "stack overflow", "hackathon"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
