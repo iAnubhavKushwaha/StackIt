@@ -11,12 +11,11 @@ function ProfilePage() {
   useEffect(() => {
     const fetchUserContent = async () => {
       try {
-        // Get user's questions
-        const questionsRes = await axios.get('/api/questions/user');
+        const [questionsRes, answersRes] = await Promise.all([
+          axios.get('/api/questions/user'),
+          axios.get('/api/answers/user'),
+        ]);
         setQuestions(questionsRes.data);
-        
-        // Get user's answers
-        const answersRes = await axios.get('/api/answers/user');
         setAnswers(answersRes.data);
       } catch (error) {
         console.error('Error fetching user content:', error);
@@ -30,74 +29,74 @@ function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-8">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex justify-center items-center h-[60vh]">
+        <div className="animate-spin h-8 w-8 border-4 border-zinc-300 border-t-zinc-600 rounded-full"></div>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="card">
-        <h1 className="text-2xl font-bold mb-6">Your Profile</h1>
-        
-        <div className="mb-6">
-          <h2 className="text-lg font-medium mb-2">Account Information</h2>
-          <p><strong>Username:</strong> {user.username}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Joined:</strong> {new Date(user.createdAt).toLocaleDateString()}</p>
+    <div className="min-h-screen bg-[#f9fafb] flex items-start justify-center px-4 py-10">
+      <div className="w-full max-w-5xl space-y-8">
+        {/* Profile Header */}
+        <div className="bg-white border border-gray-200 rounded-xl shadow-md p-8 text-center">
+          <h1 className="text-3xl font-bold text-zinc-800">Welcome, {user.username}</h1>
+          <p className="text-sm text-zinc-500 mt-2">Member since {new Date(user.createdAt).toLocaleDateString()}</p>
+          <p className="text-sm text-zinc-500">Username: {user.username}</p>
+          <p className="text-sm text-zinc-500">Email: {user.email}</p>
         </div>
-      </div>
-      
-      {/* User's Questions */}
-      <div className="card mt-6">
-        <h2 className="text-xl font-bold mb-4">Your Questions ({questions.length})</h2>
-        
-        {questions.length > 0 ? (
-          <div className="divide-y">
-            {questions.map(question => (
-              <div key={question._id} className="py-4">
-                <a 
-                  href={`/questions/${question._id}`} 
-                  className="text-lg font-medium text-blue-600 hover:text-blue-800"
-                >
-                  {question.title}
-                </a>
-                <p className="text-sm text-gray-500 mt-1">
-                  Posted on {new Date(question.createdAt).toLocaleDateString()}
-                </p>
+
+        {/* User Data */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Questions */}
+          <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-zinc-800 mb-4">Your Questions</h2>
+            {questions.length > 0 ? (
+              <div className="space-y-4">
+                {questions.map((q) => (
+                  <div key={q._id} className="border-b pb-3">
+                    <a
+                      href={`/questions/${q._id}`}
+                      className="text-base text-zinc-800 font-medium hover:underline"
+                    >
+                      {q.title}
+                    </a>
+                    <p className="text-sm text-zinc-500">
+                      Posted on {new Date(q.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              <p className="text-zinc-500 text-sm">You haven't asked any questions yet.</p>
+            )}
           </div>
-        ) : (
-          <p className="text-gray-500">You haven't asked any questions yet.</p>
-        )}
-      </div>
-      
-      {/* User's Answers */}
-      <div className="card mt-6">
-        <h2 className="text-xl font-bold mb-4">Your Answers ({answers.length})</h2>
-        
-        {answers.length > 0 ? (
-          <div className="divide-y">
-            {answers.map(answer => (
-              <div key={answer._id} className="py-4">
-                <a 
-                  href={`/questions/${answer.question}`} 
-                  className="text-lg font-medium text-blue-600 hover:text-blue-800"
-                >
-                  {answer.questionTitle || 'View Question'}
-                </a>
-                <p className="mt-1">{answer.content.substring(0, 100)}...</p>
-                <p className="text-sm text-gray-500 mt-1">
-                  Answered on {new Date(answer.createdAt).toLocaleDateString()}
-                </p>
+
+          {/* Answers */}
+          <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-zinc-800 mb-4">Your Answers</h2>
+            {answers.length > 0 ? (
+              <div className="space-y-4">
+                {answers.map((a) => (
+                  <div key={a._id} className="border-b pb-3">
+                    <a
+                      href={`/questions/${a.question}`}
+                      className="text-base text-zinc-800 font-medium hover:underline"
+                    >
+                      {a.questionTitle || 'View Question'}
+                    </a>
+                    <p className="text-sm text-zinc-600 mt-1">{a.content.substring(0, 100)}...</p>
+                    <p className="text-sm text-zinc-500">
+                      Answered on {new Date(a.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              <p className="text-zinc-500 text-sm">You haven't answered any questions yet.</p>
+            )}
           </div>
-        ) : (
-          <p className="text-gray-500">You haven't answered any questions yet.</p>
-        )}
+        </div>
       </div>
     </div>
   );

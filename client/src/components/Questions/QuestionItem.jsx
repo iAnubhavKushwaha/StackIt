@@ -1,34 +1,36 @@
 import { Link } from 'react-router-dom';
+import SanitizedHTML from '../Common/SanitizedHTML';
 
 function QuestionItem({ question }) {
   return (
-    <div className="card hover:shadow-md transition-shadow">
-      <h2 className="text-xl font-semibold">
-        <Link to={`/questions/${question._id}`} className="text-blue-600 hover:text-blue-800">
+    <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+      <h2 className="text-xl font-semibold text-zinc-800 mb-2">
+        <Link
+          to={`/questions/${question._id}`}
+          className="hover:underline hover:text-zinc-700 transition"
+        >
           {question.title}
         </Link>
       </h2>
-      
-      <div className="mt-2">
-        <p className="text-gray-600 line-clamp-2">
-          {question.description.substring(0, 150)}
-          {question.description.length > 150 ? '...' : ''}
-        </p>
+
+      <div className="text-zinc-600 text-sm line-clamp-2 mb-3">
+        <SanitizedHTML content={question.description} />
       </div>
-      
-      <div className="flex flex-wrap gap-2 mt-3">
-        {question.tags.map(tag => (
-          <span key={tag} className="bg-gray-200 text-gray-700 px-2 py-1 text-xs rounded-full">
+
+      <div className="flex flex-wrap gap-2 mb-4">
+        {question.tags.map((tag) => (
+          <span
+            key={tag}
+            className="bg-zinc-100 text-zinc-600 px-2 py-1 text-xs rounded-full"
+          >
             {tag}
           </span>
         ))}
       </div>
-      
-      <div className="flex justify-between items-center mt-4 text-sm text-gray-500">
-        <div>
-          Asked by: {question.user?.username || 'Anonymous'}
-        </div>
-        <div className="flex space-x-4 items-center">
+
+      <div className="flex justify-between items-center text-xs text-zinc-500">
+        <span>Asked by: {question.user?.username || 'Anonymous'}</span>
+        <div className="flex space-x-3">
           <span>{question.views} views</span>
           <span>{new Date(question.createdAt).toLocaleDateString()}</span>
         </div>

@@ -13,19 +13,15 @@ function AnswerForm({ questionId, onAnswerAdded }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (!content || content === '<p><br></p>') {
       return setError('Answer cannot be empty');
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
-      const newAnswer = await createAnswer({
-        content,
-        questionId
-      });
-      
+      const newAnswer = await createAnswer({ content, questionId });
       setContent('');
       onAnswerAdded(newAnswer);
     } catch (err) {
@@ -37,25 +33,32 @@ function AnswerForm({ questionId, onAnswerAdded }) {
 
   if (!isAuthenticated) {
     return (
-      <div className="card bg-gray-50 text-center">
-        <p>
-          Please <Link to="/login" className="text-blue-600 hover:underline">login</Link> or 
-          {' '}<Link to="/register" className="text-blue-600 hover:underline">register</Link> to answer this question.
+      <div className="bg-white border border-zinc-200 text-center p-6 rounded-lg shadow-sm">
+        <p className="text-sm text-zinc-600">
+          Please{' '}
+          <Link to="/login" className="text-blue-600 hover:underline">
+            login
+          </Link>{' '}
+          or{' '}
+          <Link to="/register" className="text-blue-600 hover:underline">
+            register
+          </Link>{' '}
+          to answer this question.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="card">
-      <h3 className="text-xl font-bold mb-4">Your Answer</h3>
-      
+    <div className="bg-white border border-zinc-200 p-6 rounded-lg shadow-sm mt-6">
+      <h3 className="text-xl font-semibold text-zinc-800 mb-4">Your Answer</h3>
+
       {error && (
-        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
+        <div className="bg-red-100 text-red-700 border border-red-200 px-4 py-3 rounded mb-4 text-sm">
           {error}
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <RichTextEditor
@@ -64,10 +67,12 @@ function AnswerForm({ questionId, onAnswerAdded }) {
             placeholder="Write your answer here..."
           />
         </div>
-        
-        <button 
-          type="submit" 
-          className="btn btn-primary"
+
+        <button
+          type="submit"
+          className={`bg-zinc-800 text-white rounded-md px-5 py-2 text-sm font-medium hover:bg-zinc-700 transition ${
+            isSubmitting ? 'opacity-60 cursor-not-allowed' : ''
+          }`}
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Posting...' : 'Post Your Answer'}
