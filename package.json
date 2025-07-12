@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A Q&A forum platform",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node server/server.js",
     "server": "nodemon server/server.js",
