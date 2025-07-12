@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
 router.get('/user', isAuthenticated, async (req, res) => {
   try {
     // Return user without password
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select('username email role createdAt');
     res.json(user);
   } catch (error) {
     console.error(error.message);

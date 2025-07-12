@@ -27,20 +27,22 @@ function HomePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
+      {/* Header + Ask Button */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <h1 className="text-3xl font-semibold text-gray-900">Top Questions</h1>
+        <h1 className="text-3xl font-bold text-zinc-800">Top Questions</h1>
 
         {isAuthenticated && (
           <Link
             to="/ask"
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-2.5 rounded-md shadow transition duration-200"
+            className="bg-zinc-700 hover:bg-zinc-800 text-white text-sm px-5 py-2.5 rounded-lg shadow-sm transition duration-200"
           >
             Ask Question
           </Link>
         )}
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
+      {/* Questions List */}
+      <div className="bg-white border border-zinc-200 rounded-xl shadow-sm p-6">
         <QuestionList questions={questions} isLoading={loading} />
       </div>
     </div>

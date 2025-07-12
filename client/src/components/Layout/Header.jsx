@@ -14,15 +14,15 @@ function Header() {
   };
 
   return (
-    <header className="bg-[#111827] shadow-sm text-white sticky top-0 z-50">
+    <header className="bg-white shadow-sm text-zinc-800 sticky top-0 z-50 border-b border-gray-200">
       <div className="container mx-auto py-4 px-4 md:px-8 flex justify-between items-center">
-        <Link to="/" className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+        <Link to="/" className="text-3xl font-extrabold text-zinc-800">
           StackIt
         </Link>
 
         {/* Mobile Menu Toggle */}
         <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 text-zinc-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {menuOpen ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             ) : (
@@ -33,22 +33,22 @@ function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link to="/" className="hover:text-blue-400 transition">Home</Link>
+          <Link to="/" className="hover:text-zinc-600 transition">Home</Link>
 
           {user ? (
             <>
-              <Link to="/ask" className="hover:text-blue-400 transition">Ask Question</Link>
-              <Link to="/profile" className="hover:text-blue-400 transition">{user.username}</Link>
-              <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition">
+              <Link to="/ask" className="hover:text-zinc-600 transition">Ask Question</Link>
+              <Link to="/profile" className="hover:text-zinc-600 transition">{user.username}</Link>
+              <button onClick={handleLogout} className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-md transition">
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="hover:text-blue-400 transition">Log In</Link>
+              <Link to="/login" className="hover:text-zinc-600 transition">Log In</Link>
               <Link
                 to="/register"
-                className="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-md text-white hover:brightness-110 transition"
+                className="bg-zinc-600 hover:bg-zinc-700 text-white px-4 py-2 rounded-md transition"
               >
                 Sign Up
               </Link>
@@ -59,19 +59,19 @@ function Header() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#1f2937] px-4 pb-4">
-          <nav className="space-y-3 text-sm font-medium">
-            <Link to="/" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-blue-400 transition">Home</Link>
+        <div className="md:hidden bg-gray-100 px-4 pb-4">
+          <nav className="space-y-3 text-sm font-medium text-zinc-800">
+            <Link to="/" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-zinc-600 transition">Home</Link>
             {user ? (
               <>
-                <Link to="/ask" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-blue-400 transition">Ask Question</Link>
-                <Link to="/profile" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-blue-400 transition">Profile</Link>
-                <button onClick={handleLogout} className="block py-2 text-red-400 hover:text-red-500 transition">Logout</button>
+                <Link to="/ask" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-zinc-600 transition">Ask Question</Link>
+                <Link to="/profile" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-zinc-600 transition">Profile</Link>
+                <button onClick={handleLogout} className="block py-2 text-red-500 hover:text-red-600 transition">Logout</button>
               </>
             ) : (
               <>
-                <Link to="/login" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-blue-400 transition">Log In</Link>
-                <Link to="/register" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-purple-400 transition">Sign Up</Link>
+                <Link to="/login" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-zinc-600 transition">Log In</Link>
+                <Link to="/register" onClick={() => setMenuOpen(false)} className="block py-2 hover:text-zinc-700 transition">Sign Up</Link>
               </>
             )}
           </nav>
